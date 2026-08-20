@@ -499,7 +499,7 @@ class LawnchairLauncher : QuickstepLauncher() {
             },
         )
 
-        window?.decorView.postDelayed({
+        window?.decorView?.postDelayed({
             val mDisplayState = getViewRootDisplayState()
             val now = SystemClock.elapsedRealtime()
 
