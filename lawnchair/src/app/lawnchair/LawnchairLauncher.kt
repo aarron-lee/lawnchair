@@ -499,7 +499,7 @@ class LawnchairLauncher : QuickstepLauncher() {
             },
         )
 
-        window.decorView.postDelayed({
+        window?.decorView.postDelayed({
             val mDisplayState = getViewRootDisplayState()
             val now = SystemClock.elapsedRealtime()
 
@@ -514,7 +514,7 @@ class LawnchairLauncher : QuickstepLauncher() {
 
     private fun getViewRootDisplayState(): Int {
         return try {
-            val decorView = window.decorView
+            val decorView = window?.decorView
 
             // Get ViewRootImpl from decorView
             val viewRootImplMethod = View::class.java.getDeclaredMethod("getViewRootImpl")
