@@ -1,0 +1,56 @@
+name: Build APK and publish (other)
+
+on:
+  push:
+    branches:
+      - "*"
+    paths-ignore:
+      - ".idea/**"
+      - ".gitattributes"
+      - ".github/**.json"
+      - ".gitignore"
+      - ".gitmodules"
+      - "**.md"
+      - "LICENSE"
+      - "NOTICE"
+  pull_request:
+    branches:
+      - "*"
+    paths-ignore:
+      - ".idea/**"
+      - ".gitattributes"
+      - ".github/**.json"
+      - ".gitignore"
+      - ".gitmodules"
+      - "**.md"
+      - "LICENSE"
+      - "NOTICE"
+  workflow_dispatch:
+  workflow_call:
+
+permissions: write-all
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build APK
+        run: ./gradlew assembleLawnWithQuickstepGithubRelease
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Unsigned Release APK
+          path: build/outputs/apk/lawnWithQuickstepGithub/release/*.apk
